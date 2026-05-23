@@ -1,9 +1,10 @@
 
 # Crop Image Pro
 
-[![pub package](https://img.shields.io/pub/v/crop_image.svg)](https://pub.dev/packages/crop_image)
 
-一个支持多平台（Flutter移动端、Web、桌面）的图片裁剪插件，完全用 Dart 实现，无需依赖原生库。
+
+一个支持安卓、iOS、鸿蒙的 Flutter 图片裁剪插件，完全用 Dart 实现，无需依赖原生库。
+
 
 ## 功能特性
 
@@ -13,7 +14,6 @@
 - 支持固定/自定义裁剪比例
 - 支持裁剪区域旋转
 - 支持获取裁剪后图片像素数据
-- 兼容所有 Flutter 支持的平台
 
 
 ## 预览
@@ -79,13 +79,3 @@ data = await bitmap.toByteData(format: ImageByteFormat.png);
 bytes = data!.buffer.asUint8List();
 file.writeAsBytes(bytes, flush: true);
 ```
-
-## 常见问题
-
-- Flutter Web 下请优先使用 CanvasKit 渲染，HTML 渲染器不支持 `Picture.toImage()`。
-
-# 支持
-
-如果你喜欢这个插件，欢迎支持作者。
-
-<a href="https://www.buymeacoffee.com/deakjahn" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Book" height="60" width="217"></a>
