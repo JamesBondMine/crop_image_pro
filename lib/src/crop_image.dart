@@ -23,7 +23,7 @@ enum CropInteractionMode {
 /// See also:
 ///
 ///  * [CropController] to control the functioning of this widget.
-class CropImage extends StatefulWidget {
+class CropImagePro extends StatefulWidget {
   /// Controls the crop values being applied.
   ///
   /// If null, this widget will create its own [CropController]. If you want to specify initial values of
@@ -152,7 +152,7 @@ class CropImage extends StatefulWidget {
   /// Default is const CircularProgressIndicator.adaptive()
   final Widget loadingPlaceholder;
 
-  const CropImage({
+  const CropImagePro({
     super.key,
     this.controller,
     required this.image,
@@ -193,7 +193,7 @@ class CropImage extends StatefulWidget {
             'maxImageScale cannot be less than minImageScale');
 
   @override
-  State<CropImage> createState() => _CropImageState();
+  State<CropImagePro> createState() => _CropImageState();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -237,7 +237,7 @@ class CropImage extends StatefulWidget {
 
 enum _CornerTypes { UpperLeft, UpperRight, LowerRight, LowerLeft, None, Move }
 
-class _CropImageState extends State<CropImage> {
+class _CropImageState extends State<CropImagePro> {
   late CropController controller;
   late ImageStream _stream;
   late ImageStreamListener _streamListener;
@@ -341,7 +341,7 @@ class _CropImageState extends State<CropImage> {
   }
 
   @override
-  void didUpdateWidget(CropImage oldWidget) {
+  void didUpdateWidget(CropImagePro oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     if (widget.controller == null && oldWidget.controller != null) {
