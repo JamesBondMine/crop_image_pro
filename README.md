@@ -1,152 +1,83 @@
+
 # Crop Image
 
 [![pub package](https://img.shields.io/pub/v/crop_image.svg)](https://pub.dev/packages/crop_image)
 
-An image cropper widget. It provides the usual user experience of classic mobile and desktop
-image croppers but, as it's written completely in Dart, it doesn't depend on any mobile package.
-Consequently, it runs on all platforms supported by Flutter: mobile, web and desktop alike.
+一个支持多平台（Flutter移动端、Web、桌面）的图片裁剪插件，完全用 Dart 实现，无需依赖原生库。
 
-The appearance of the crop rectangle can be customized.
+## 功能特性
+
+- 支持拖拽图片、放大缩小图片，灵活选定裁剪区域
+- 支持拖动裁剪框、放大缩小裁剪框，精准选定裁剪区域
+- 可自定义裁剪框外观（颜色、线宽、圆角等）
+- 支持固定/自定义裁剪比例
+- 支持裁剪区域旋转
+- 支持获取裁剪后图片像素数据
+- 兼容所有 Flutter 支持的平台
+
+## 预览
+
+![插件预览](screenshots/preview.jpg)
+
+## 快速开始
 
 ```dart
 final controller = CropController(
-  /// If not specified, [aspectRatio] will not be enforced.
-  aspectRatio: 1,
-  /// Specify in percentages (1 means full width and height). Defaults to the full image.
-  defaultCrop: Rect.fromLTRB(0.1, 0.1, 0.9, 0.9),
+  aspectRatio: 1, // 可选，裁剪框宽高比
+  defaultCrop: Rect.fromLTRB(0.1, 0.1, 0.9, 0.9), // 可选，初始裁剪区域
 );
 
 CropImage(
-  /// Only needed if you expect to make use of its functionality like setting initial values of
-  /// [aspectRatio] and [defaultCrop].
   controller: controller,
-  /// The image to be cropped. Use [Image.file] or [Image.network] or any other [Image].
-  image: Image.asset('...'),
-  /// The crop grid color of the outer lines. Defaults to 70% white.
-  gridColor: Colors.white,
-  /// The crop grid color of the inner lines. Defaults to [gridColor].
-  gridInnerColor: Colors.white,
-  /// The crop grid color of the corner lines. Defaults to [gridColor].
-  gridCornerColor: Colors.white,
-  /// The size of the corner of the crop grid. Defaults to 25.
-  gridCornerSize: 50,
-  /// The offset of the corner handles from the crop grid edges. 
-  /// Positive values move corners outside. Defaults to 0.
-  cornerOffset: 10,
-  /// Whether to display the corners. Defaults to true.
-  showCorners: true,
-  /// The width of the crop grid thin lines. Defaults to 2.
-  gridThinWidth: 3,
-  /// The width of the crop grid thick lines. Defaults to 5.
-  gridThickWidth: 6,
-  /// The crop grid scrim (outside area overlay) color. Defaults to 54% black.
-  scrimColor: Colors.grey.withOpacity(0.5),
-  /// True: Always show third lines of the crop grid.
-  /// False: third lines are only displayed while the user manipulates the grid (default).
-  alwaysShowThirdLines: true,
-  /// Event called when the user changes the crop rectangle.
-  /// The passed [Rect] is normalized between 0 and 1.
-  onCrop: (rect) => print(rect),
-  /// The minimum pixel size the crop rectangle can be shrunk to. Defaults to 100.
-  minimumImageSize: 50,
-  /// The maximum pixel size the crop rectangle can be grown to. Defaults to infinity.
-  /// You can constrain the crop rectangle to a fixed size by setting
-  /// both [minimumImageSize] and [maximumImageSize] to the same value (the width) and using
-  /// the [aspectRatio] of the controller to force the other dimension (width / height).
-  /// Doing so disables the display of the corners.
-  maximumImageSize: 2000;
+  image: Image.asset('your_image.jpg'),
+  onCrop: (rect) => print(rect), // 裁剪区域变化回调
 );
 ```
 
-## Setting up
+## 主要参数说明
 
-Using a controller is optional, if you don't provide your own, the widget will create one and use it internally.
-Without a controller, you can handle the `onCrop` event and keep track of the changing crop selection of the user.
-When using a controller, you don't need to use `onCrop`, you can simply read out the crop values any time,
-also converted to pixels rather than percentage.
+- `aspectRatio`：裁剪框宽高比
+- `defaultCrop`：初始裁剪区域（百分比）
+- `gridColor`、`gridInnerColor`、`gridCornerColor`：裁剪框线条颜色
+- `gridCornerSize`、`cornerOffset`：裁剪框角尺寸与偏移
+- `minimumImageSize`、`maximumImageSize`：裁剪框最小/最大像素尺寸
+- `alwaysShowThirdLines`：是否总显示九宫格辅助线
+- `scrimColor`：裁剪区域外遮罩颜色
 
-Initial values for `aspectRatio` and `defaultCrop` can be provided on the controller.
-
-```dart
-final controller = CropController(
-  aspectRatio: 16.0 / 9.0,
-  defaultCrop: Rect.fromLTRB(0.05, 0.05, 0.95, 0.95),
-);
-```
-
-The controller also allows you to change both the `aspectRatio` and the `crop` rectangle programmatically:
+## 裁剪与导出
 
 ```dart
-controller.aspectRatio = 16.0 / 9.0;
-controller.crop = Rect.fromLTRB(0.05, 0.05, 0.95, 0.95);
-```
+// 获取裁剪区域（百分比和像素）
+Rect cropRect = controller.crop;
+Rect cropRectPx = controller.cropSize;
 
-Note that if an `aspectRatio` was specified, all crop rectangles will be adjusted automatically to fit the
-required aspect ratio.
-
-## Fixed crop size
-
-You can constrain the crop rectangle to a fixed size by setting both `minimumImageSize` and `maximumImageSize`
-to the same value (the width) and using the `aspectRatio` of the controller to force the other dimension (width / height).
-Doing so disables the display of the corners.
-
-## Rotation
-
-You can set the rotation of the crop rectangle to a specific orientation using the provided `CropRotation` values:
-
-```dart
-controller.rotation = CropRotation.right;
-```
-
-or rotating it (repeatedly) with:
-
-```dart
-controller.rotateLeft();
-controller.rotateRight();
-```
-
-## Using the result
-
-The final crop rectangle decided by the user can be used in various ways. The base output of the widget
-is the crop rectangle in relative terms, all four values of the `Rect` normalized to between 0 and 1
-(1 meaning full width and height), so basically in percentage. The controller also has a `cropSize` property
-that maps the crop rectangle to the actual pixels of the bitmap.
-
-```dart
-Rect finalCropRelative = controller.crop;
-Rect finalCropPixels = controller.cropSize;
-```
-
-The widget does not crop the original bitmap directly but its `CropController` provides two convenience functions
-to do so if required:
-
-```dart
+// 导出裁剪后的图片
 ui.Image bitmap = await controller.croppedBitmap();
 Image image = await controller.croppedImage();
 ```
 
-If you want to create an `Image` with additional settings (eg. different `Image.fit`), replicate the functionality of
-`croppedImage()` for yourself. You can use the `UiImageProvider` image provider exposed from the package.
+## 旋转裁剪区域
 
-## Creating a file
+```dart
+controller.rotation = CropRotation.right;
+controller.rotateLeft();
+controller.rotateRight();
+```
 
-If you want to save the cropped `ui.Image` to a file, this operation is not specific to this plugin. Use the existing functions
-of `ui.Image` and `File`:
+## 保存图片到文件
 
 ```dart
 data = await bitmap.toByteData(format: ImageByteFormat.png);
 bytes = data!.buffer.asUint8List();
-file.writeAsBytes(bytes, flush);
+file.writeAsBytes(bytes, flush: true);
 ```
 
-## Known problems
+## 常见问题
 
-`croppedBitmap()` – and consequently, `croppedImage()` – result in an exception on Flutter Web with the HTML web renderer.
-The culprit is `Picture.toImage()` that doesn't work with it (see https://github.com/flutter/engine/pull/20750).
-Consider using CanvasKit for the web renderer (which is much better than HTML, anyway).
+- Flutter Web 下请优先使用 CanvasKit 渲染，HTML 渲染器不支持 `Picture.toImage()`。
 
-# Support
+# 支持
 
-If you like this package, please consider supporting it.
+如果你喜欢这个插件，欢迎支持作者。
 
 <a href="https://www.buymeacoffee.com/deakjahn" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Book" height="60" width="217"></a>
