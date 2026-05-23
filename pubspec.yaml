@@ -1,6 +1,6 @@
 name: crop_image_pro
 description: An image cropper widget, with 90-degree rotations. Supports mobile, web and desktop.
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/JamesBondMine/crop_image_pro
 
 environment:
