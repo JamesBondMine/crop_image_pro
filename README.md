@@ -1,5 +1,5 @@
 
-# Crop Image
+# Crop Image Pro
 
 [![pub package](https://img.shields.io/pub/v/crop_image.svg)](https://pub.dev/packages/crop_image)
 
@@ -15,9 +15,11 @@
 - 支持获取裁剪后图片像素数据
 - 兼容所有 Flutter 支持的平台
 
+
 ## 预览
 
-![插件预览](screenshots/preview.jpg)
+![插件预览](https://github.com/JamesBondMine/crop_image_pro/blob/main/crow_image_pro_preview.jpg?raw=true)
+
 
 ## 快速开始
 
@@ -27,12 +29,18 @@ final controller = CropController(
   defaultCrop: Rect.fromLTRB(0.1, 0.1, 0.9, 0.9), // 可选，初始裁剪区域
 );
 
-CropImage(
-  controller: controller,
-  image: Image.asset('your_image.jpg'),
-  onCrop: (rect) => print(rect), // 裁剪区域变化回调
-);
+Expanded(
+  child: CropImagePro(
+    controller: controller,
+    image: Image.asset('assets/images.jpg'),
+    alwaysShowThirdLines: true,
+    interactionMode: CropInteractionMode.image, // 或 CropInteractionMode.crop
+    showCorners: false,
+  ),
+)
 ```
+
+> 你可以将 `CropImagePro` 放在任意布局中，常见用法如上。`interactionMode` 可选 "image" 或 "crop"，分别对应图片拖拽/缩放和裁剪框拖拽/缩放模式。
 
 ## 主要参数说明
 
