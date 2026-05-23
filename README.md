@@ -18,7 +18,7 @@
 
 ## 预览
 
-![插件预览](https://github.com/JamesBondMine/crop_image_pro/blob/main/crow_image_pro_preview.jpg?raw=true)
+<img src="https://github.com/JamesBondMine/crop_image_pro/blob/main/crow_image_pro_preview.jpg?raw=true" alt="插件预览" width="300" />
 
 
 ## 快速开始
