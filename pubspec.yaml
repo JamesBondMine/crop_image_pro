@@ -1,7 +1,7 @@
 name: crop_image_pro
 description: An image cropper widget, with 90-degree rotations. Supports mobile, web and desktop.
-version: 1.0.17
-homepage: https://github.com/deakjahn/crop_image
+version: 1.0.0
+homepage: https://github.com/JamesBondMine/crop_image_pro
 
 environment:
   sdk: ">=2.17.0 <4.0.0"
@@ -29,4 +29,4 @@ screenshots:
 
 topics:
   - flutter
-  - crop-image
+  - crop-image-pro
